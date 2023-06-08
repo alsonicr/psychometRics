@@ -26,3 +26,8 @@ a data.frame with the result and confidence interval of pearson correlation and 
 \description{
 Discrimination correlation
 }
+\examples{
+data("inference")
+items <- c(paste0("item_0",3:9),"item_10")
+discrimination_cor(inference, items)
+}

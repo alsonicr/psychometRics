@@ -18,6 +18,7 @@ data table with the item name and their frequency of correct response
 Frequency scan provide the frequency of correct answer for dichotomic item in a data frame
 }
 \examples{
-
-1+1
+data("inference")
+items <- c(paste0("item_0",3:9),"item_10")
+freq_scan(inference, items)
 }
