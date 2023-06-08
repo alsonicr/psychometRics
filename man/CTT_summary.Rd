@@ -2,7 +2,7 @@
 % Please edit documentation in R/ctt.R
 \name{CTT_summary}
 \alias{CTT_summary}
-\title{Summary}
+\title{Classical Test Theory Summary}
 \usage{
 CTT_summary(data, items, digits = 3, ...)
 }
@@ -14,5 +14,10 @@ CTT_summary(data, items, digits = 3, ...)
 \item{...}{}
 }
 \description{
-Summary
+Classical Test Theory Summary
+}
+\examples{
+data("inference")
+items <- c(paste0("item_0",3:9),"item_10")
+CTT_summary(inference, items)
 }

@@ -10,8 +10,10 @@
 #' @export
 #'
 #' @examples
-#'
-#' 1+1
+#' data("inference")
+#' items <- c(paste0("item_0",3:9),"item_10")
+#' freq_scan(inference, items)
+
 freq_scan <- function(data, items) {
   freq <- data.frame()
   for (item in items) {
@@ -42,6 +44,9 @@ freq_scan <- function(data, items) {
 #' @importFrom  DescTools SomersDelta
 #' @importFrom  DescTools SomersDelta
 #' @examples
+#' data("inference")
+#' items <- c(paste0("item_0",3:9),"item_10")
+#' discrimination_cor(inference, items)
 
 discrimination_cor <- function(data, items, type = "rir", method = c("cor","somer","polyserial"),conf.level=0.95,...){
   args <- list(...)
@@ -104,6 +109,11 @@ discrimination_cor <- function(data, items, type = "rir", method = c("cor","some
 #' @importFrom  tibble add_column
 #'
 #' @examples
+#' data("inference")
+#' items <- c(paste0("item_0",3:9),"item_10")
+#' alpha.scan(inference, items)
+#' alpha.scan(inference, items, parallel = TRUE)
+
 alpha.scan <- function(data, items, digits=3, parallel=FALSE, verbose = TRUE) {
   all <- cronbach.alpha(data[, items], na.rm = T, CI = T)
 
@@ -180,7 +190,7 @@ alpha.scan <- function(data, items, digits=3, parallel=FALSE, verbose = TRUE) {
 
 
 
-#' Summary
+#' Classical Test Theory Summary
 #'
 #' @param data a data.frame containing the test or scale response in columns
 #' @param items The name of the items (should be >1 )
@@ -191,6 +201,11 @@ alpha.scan <- function(data, items, digits=3, parallel=FALSE, verbose = TRUE) {
 #' @export
 #'
 #' @examples
+#' data("inference")
+#' items <- c(paste0("item_0",3:9),"item_10")
+#' CTT_summary(inference, items)
+
+
 CTT_summary <- function(data,items, digits=3,...){
 
   args <- list(...)

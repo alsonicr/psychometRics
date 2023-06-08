@@ -4,22 +4,28 @@
 \alias{alpha.scan}
 \title{Alpha Cronback scan}
 \usage{
-alpha.scan(
-  data,
-  items,
-  gain.format = TRUE,
-  digits = 3,
-  parallel = FALSE,
-  verbose = TRUE
-)
+alpha.scan(data, items, digits = 3, parallel = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{data}{a data.frame containing the test or scale response in columns}
 
 \item{items}{The name of the items (should be >1 )}
 
-\item{item.drop}{}
+\item{digits}{Number of digits in the table summary}
+
+\item{parallel}{Bool use doSNOW and parallel when there is a great number of items}
+
+\item{verbose}{Bool for progression visualisation}
+}
+\value{
+return a table with the variation of the alpha when the item is remove from the pool
 }
 \description{
 Alpha Cronback scan
+}
+\examples{
+data("inference")
+items <- c(paste0("item_0",3:9),"item_10")
+alpha.scan(inference, items)
+alpha.scan(inference, items, parallel = TRUE)
 }
