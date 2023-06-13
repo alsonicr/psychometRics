@@ -4,7 +4,7 @@ library(psychometRics)
 data("inference")
 items <- c(paste0("item_0",3:9),"item_10")
 
-
+psychometRics::
 
 
 freq_scan(inference, items)
