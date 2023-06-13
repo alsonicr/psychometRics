@@ -21,7 +21,7 @@ alpha.scan(data, items, digits = 3, parallel = FALSE, verbose = TRUE)
 return a table with the variation of the alpha when the item is remove from the pool
 }
 \description{
-Alpha Cronback scan
+the function provide the variation of relaibility of alpha when an item is drop from the data.
 }
 \examples{
 data("inference")

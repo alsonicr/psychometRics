@@ -2,13 +2,23 @@
 % Please edit documentation in R/ctt.R
 \name{print.CTT_summary}
 \alias{print.CTT_summary}
-\title{Title}
+\title{Print Method for CTT_summary}
 \usage{
 \method{print}{CTT_summary}(x)
 }
 \arguments{
 \item{x}{}
 }
+\value{
+print the result of the function
+}
 \description{
-Title
+Print Method for CTT_summary
+}
+\examples{
+data("inference")
+items <- c(paste0("item_0",3:9),"item_10")
+t <- CTT_summary(inference, items)
+print(t)
+
 }

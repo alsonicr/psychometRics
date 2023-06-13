@@ -12,13 +12,16 @@ freq_scan(data, items)
 \item{items}{The name of the items (should be >1 )}
 }
 \value{
-data table with the item name and their frequency of correct response
+data.frame with the item name and their frequency of correct response
 }
 \description{
-Frequency scan provide the frequency of correct answer for dichotomic item in a data frame
+Frequency scan provide the frequency of correct answer for dichotomic item (0 or 1) in a data frame
 }
 \examples{
 data("inference")
 items <- c(paste0("item_0",3:9),"item_10")
+freq_scan(inference, items)
+
+inference[1,1] <- 4
 freq_scan(inference, items)
 }

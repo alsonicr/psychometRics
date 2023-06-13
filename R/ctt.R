@@ -1,17 +1,20 @@
 
 #' Frequency scam
 #'
-#' Frequency scan provide the frequency of correct answer for dichotomic item in a data frame
+#' Frequency scan provide the frequency of correct answer for dichotomic item (0 or 1) in a data frame
 #'
 #' @param data a data.frame containing the test or scale response in columns
 #' @param items The name of the items (should be >1 )
 #'
-#' @return data table with the item name and their frequency of correct response
+#' @return data.frame with the item name and their frequency of correct response
 #' @export
 #'
 #' @examples
 #' data("inference")
 #' items <- c(paste0("item_0",3:9),"item_10")
+#' freq_scan(inference, items)
+#'
+#' inference[1,1] <- 4
 #' freq_scan(inference, items)
 
 freq_scan <- function(data, items) {
@@ -35,13 +38,17 @@ freq_scan <- function(data, items) {
 
 #' Discrimination correlation
 #'
+#' The function provide correlation item rest (rir) or correlation item test (rit) for a all of the item in the test.
+#' Multiple type of item corrleation are provided as somer's d, point biserial correlation and polyserial correlation for non dichotomic item
+#' Result could be interpretend as the item ability to discriminate between a lower and higher difficulty for this item in regard to the overall raw score.
+#'
 #' @param data a data.frame containing the test or scale response in columns
 #' @param items The name of the items (should be >1 )
-#' @param type type correlation could be rir for Rest Item-correlation or rit for Total Item-correlation
+#' @param type type correlation could be rir for Rest Item-correlation or rit for Total Item-correlation (can be both)
+#' @param method the type of correlation to use c("cor","somer","polyserial")
+#' @param conf.level the confidence interval for the correlation needed
 #'
-#' @return a data.frame with the result and confidence interval of pearson correlation and somer delta
-#' @export
-#' @importFrom  DescTools SomersDelta
+#' @return a data.frame with the result and confidence interval
 #' @importFrom  DescTools SomersDelta
 #' @examples
 #' data("inference")
@@ -93,6 +100,8 @@ discrimination_cor <- function(data, items, type = "rir", method = c("cor","some
 
 
 #' Alpha Cronback scan
+#'
+#' the function provide the variation of relaibility of alpha when an item is drop from the data.
 #'
 #' @param data a data.frame containing the test or scale response in columns
 #' @param items The name of the items (should be >1 )
@@ -192,12 +201,14 @@ alpha.scan <- function(data, items, digits=3, parallel=FALSE, verbose = TRUE) {
 
 #' Classical Test Theory Summary
 #'
+#' the fonction provide a warpping of the freq_scan, discrimination_cor, alpha.scan functions  # nolint: line_length_linter.
+#'
 #' @param data a data.frame containing the test or scale response in columns
 #' @param items The name of the items (should be >1 )
-#' @param digits
+#' @param digits number of digits for result
 #' @param ...
 #'
-#' @return
+#' @return a summary of the result and a list with the complet result of each function
 #' @export
 #'
 #' @examples
@@ -233,14 +244,19 @@ CTT_summary <- function(data,items, digits=3,...){
 }
 
 
-#' Title
+#' Print Method for CTT_summary
 #'
 #' @param x
 #'
-#' @return
+#' @return print the result of the function
 #' @export
 #' @importFrom knitr kable
 #' @examples
+#' data("inference")
+#' items <- c(paste0("item_0",3:9),"item_10")
+#' t <- CTT_summary(inference, items)
+#' print(t)
+#'
 print.CTT_summary <- function(x){
   freq <- x$frequence
   disc <- x$discrimination[,names(x$discrimination) %in% c("item","r","somers.d","polyserial")]
