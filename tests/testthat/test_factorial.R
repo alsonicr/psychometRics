@@ -14,8 +14,8 @@ test_that(" test factor explorer ", {
 
 test_that("test factor comparison",{
   factors <- factor_explorer(inference, items)
-  tmp1 <- factor_comparaison(inference, items, factors)
-  tmp2 <- factor_comparaison(inference, items,c(4,1,2))
+  tmp1 <- factor_comparison(inference, items, factors)
+  tmp2 <- factor_comparison(inference, items,c(4,1,2))
   expect_identical(tmp1,tmp2)
   expect_named(tmp1,c("1" , "2",  "4" , "model comparaison"))
 })

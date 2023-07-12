@@ -22,7 +22,7 @@ CTT_summary <- function(data,items, digits=3,...){
   args <- list(...)
 
   cat("frequence computation \n" )
-  freq <- do.call(freq_scan, list(data, items))
+  freq <- do.call(freq.scan, list(data, items))
   cat("item discrimination (rir,rit) computation\n" )
   discri <- do.call(discrimination_cor,
                     c(list(data, items),

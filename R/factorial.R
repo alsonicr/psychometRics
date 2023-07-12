@@ -55,7 +55,7 @@ factor_explorer <- function(data, items, plot = FALSE, ...){
 #'
 #' @param x a facto class object
 #'
-#'
+#' @export
 #' @examples
 #' data("inference")
 #' items <- c(paste0("item_0",3:9),"item_10")
@@ -82,11 +82,11 @@ print.facto <- function(x){
 #' @param x a  psych:fa class
 #'
 #' @return the CFI index of the tested model
-#'
+#' @export
 #' @examples
 #' data("inference")
 #' items <- c(paste0("item_0",3:9),"item_10")
-#' FA <- psych::fa(inference[,items], nfactors = factor)
+#' FA <- psych::fa(inference[,items], nfactors = 2)
 #' fa.CFI(FA)
 
 fa.CFI <- function(x) {

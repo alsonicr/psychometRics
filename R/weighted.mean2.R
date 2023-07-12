@@ -10,7 +10,10 @@
 #' @export
 #' @examples
 #' 1+1
-#'
+#' group.mean <- c(10,23,15,16)
+#' pop_perc <- c(0.25,0.19,0.5,0.45)
+#' group_perc <- c(0.10,0.25,0.12)
+#' weighted.mean2(group.mean,pop_perc,group_perc)
 #'
 #
 weighted.mean2 <- function(group.mean, pourcent_pop, pourcent_gp) {

@@ -4,8 +4,8 @@ items <- c(paste0("item_0",3:9),"item_10")
 
 
 test_that(" CTT frequency ", {
-  expect_output(str(freq_scan(inference, items)), "2 VARIABLES", ignore.case = TRUE)
-  expect_output(str(freq_scan(inference, items)), "8 obs")
+  expect_output(str(freq.scan(inference, items)), "2 VARIABLES", ignore.case = TRUE)
+  expect_output(str(freq.scan(inference, items)), "8 obs")
 })
 
 

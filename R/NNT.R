@@ -7,7 +7,7 @@
 #' @param EER the control event rate between (0 and 1)
 #' @param type the type of NNT could be "classic", "Furukawa" or "Kraemer"
 #'
-#' @return
+#' @return an NNT score or a table of NNT score
 #' @export
 #'
 #' @examples

@@ -92,7 +92,24 @@ Result could be interpretend as the item ability to discriminate between a lower
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"inference"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">items</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"item_0"</span>,<span class="fl">3</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span>,<span class="st">"item_10"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">discrimination_cor</span><span class="op">(</span><span class="va">inference</span>, <span class="va">items</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in discrimination_cor(inference, items):</span> could not find function "discrimination_cor"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   type    item         r  r.lwr.ci  r.upr.ci  somers.d somers.lwr.ci</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  rir item_03 0.4450732 0.4116532 0.4772977 0.5659784     0.5015010</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  rir item_04 0.4125828 0.3780483 0.4459706 0.5635974     0.4818141</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  rir item_05 0.4896669 0.4579252 0.5201617 0.5878897     0.5347608</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  rir item_06 0.5634606 0.5348756 0.5907573 0.6841167     0.6327604</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  rir item_07 0.4893683 0.4576148 0.5198752 0.5601048     0.5226987</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  rir item_08 0.2912004 0.2533020 0.3282064 0.3143698     0.2683658</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  rir item_09 0.4171450 0.3827616 0.4503745 0.4723415     0.4327335</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  rir item_10 0.3927835 0.3576144 0.4268401 0.4971675     0.4517085</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   somers.upr.ci polyserial</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     0.6304557  0.6148742</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     0.6453806  0.6000359</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     0.6410186  0.6502255</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     0.7354729  0.7462634</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     0.5975109  0.6146025</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     0.3603738  0.3688786</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     0.5119494  0.5228201</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     0.5426265  0.5128318</span>
 </code></pre></div>
     </div>
   </div>
