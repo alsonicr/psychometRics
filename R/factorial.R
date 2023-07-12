@@ -55,7 +55,7 @@ factor_explorer <- function(data, items, plot = FALSE, ...){
 #'
 #' @param x a facto class object
 #'
-#'
+#' @export
 #' @examples
 #' data("inference")
 #' items <- c(paste0("item_0",3:9),"item_10")
@@ -82,11 +82,11 @@ print.facto <- function(x){
 #' @param x a  psych:fa class
 #'
 #' @return the CFI index of the tested model
-#'
+#' @export
 #' @examples
 #' data("inference")
 #' items <- c(paste0("item_0",3:9),"item_10")
-#' FA <- psych::fa(inference[,items], nfactors = factor)
+#' FA <- psych::fa(inference[,items], nfactors = 2)
 #' fa.CFI(FA)
 
 fa.CFI <- function(x) {
@@ -101,7 +101,7 @@ fa.CFI <- function(x) {
 
 
 
-#' Factor comparaison
+#' Factor comparison
 #'
 #' Compute anova and fit index to compare multiple factor analyse fit for multiple factors solution
 #'
@@ -119,10 +119,10 @@ fa.CFI <- function(x) {
 #' data("inference")
 #' items <- c(paste0("item_0",3:9),"item_10")
 #' f <- factor_explorer(inference, items)
-#' factor_comparaison(inference, items, f)
-#' factor_comparaison(inference, items, c(1,2,3))
+#' factor_comparison(inference, items, f)
+#' factor_comparison(inference, items, c(1,2,3))
 
-factor_comparaison <- function(data, items, factors){
+factor_comparison <- function(data, items, factors){
 
   if(class(factors)=="facto"){
     factors <-unique(as.numeric(unlist(factors[["factor"]])))
@@ -132,15 +132,19 @@ factor_comparaison <- function(data, items, factors){
   factor.model <- vector("list")
 
   for (factor in factors){
+    # nfactor <- factor
     tmp <- vector("list")
     FA <- psych::fa(data[,items], nfactors = factor)
     tmp[["model"]]  <- FA
     tmp[["fit"]] <- data.frame(
+
       "CFI"= fa.CFI(FA),
       "TLI"= FA$TLI,
-      "RMSEA" = FA$RMSEA[1],
+      "RMSEA" = ifelse(is.null(FA$RMSEA[1]),NA,FA$RMSEA[1]),
       "SRMR" = FA$rms
     )
+
+
     factor.model[[as.character(factor)]]<- tmp
   }
 
@@ -161,7 +165,7 @@ factor_comparaison <- function(data, items, factors){
   evaluation <- paste(evaluation,f,")")
   model.comp <- eval(parse(text=evaluation))
   model.comp <- cbind(model.comp,fit.comp)
-
+  rownames(model.comp) <- paste0("n.factor = ",factors)
   factor.model[["model comparaison"]] <- model.comp
   class(factor.model) <- 'factor.comparaison'
   return(factor.model)
@@ -172,12 +176,18 @@ factor_comparaison <- function(data, items, factors){
 #'
 #' @param x a factor.comparaison class
 #'
-#' @return
+#' @return return a print for the factor_comparaison() result
 #' @export
 #'
 #' @examples
+#' data("inference")
+#' items <- c(paste0("item_0",3:9),"item_10")
+#' f <- factor_explorer(inference, items)
+#' ff <- factor_comparison(inference, items, f)
+#' print(ff)
+
 print.factor.comparaison <- function(x){
-  print( knitr::kable(x[["model comparaison"]],'simple',digits = 3))
+  print(knitr::kable(x[["model comparaison"]],'simple',digits = 3))
 }
 
 

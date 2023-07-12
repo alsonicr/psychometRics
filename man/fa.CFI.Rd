@@ -18,6 +18,6 @@ extract a CFI fit index from a psych:fa class result
 \examples{
 data("inference")
 items <- c(paste0("item_0",3:9),"item_10")
-FA <- psych::fa(inference[,items], nfactors = factor)
+FA <- psych::fa(inference[,items], nfactors = 2)
 fa.CFI(FA)
 }

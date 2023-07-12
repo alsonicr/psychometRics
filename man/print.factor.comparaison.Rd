@@ -9,6 +9,16 @@
 \arguments{
 \item{x}{a factor.comparaison class}
 }
+\value{
+return a print for the factor_comparaison() result
+}
 \description{
 Print method for factor_comparaison
+}
+\examples{
+data("inference")
+items <- c(paste0("item_0",3:9),"item_10")
+f <- factor_explorer(inference, items)
+ff <- factor_comparison(inference, items, f)
+print(ff)
 }
