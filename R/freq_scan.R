@@ -16,12 +16,12 @@
 #' inference[1,1] <- 4
 #' freq.scan(inference, items)
 
-freq.scan <- function(data, items) {
+freq.scan <- function(data, items, verbose = T) {
   freq <- data.frame()
   for (item in items) {
 
-    if (sum(!(data[,item] %in% c(0,1)))>0){
-      cat("Item : ", item," is not a dichotomus item frequency will return NA \n")
+    if (sum(!(data[,item] %in% c(0,1,NA)))>0){
+      if(verbose) cat("Item : ", item," is not a dichotomus item frequency will return NA \n")
       freq <- rbind(freq, data.frame(item = item, freq = NA))
     } else {
       tmp <- mean(data[, item], na.rm = T)
