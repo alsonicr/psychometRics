@@ -4,7 +4,7 @@
 \alias{CTT_summary}
 \title{Classical Test Theory Summary}
 \usage{
-CTT_summary(data, items, digits = 3, ...)
+CTT_summary(data, items, digits = 3, verbose = TRUE, ...)
 }
 \arguments{
 \item{data}{a data.frame containing the test or scale response in columns}

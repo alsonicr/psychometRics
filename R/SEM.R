@@ -11,7 +11,7 @@
 #'
 #' SEM_reg("Y","x")
 #' SEM_reg("Y",c("x1","x2","x3"))
-#' #' SEM_reg(c("Y1","Y2","Y3"),c("x1","x2","x3"))
+#' SEM_reg(c("Y1","Y2","Y3"),c("x1","x2","x3"))
 #'
 SEM_reg <- function(y, x){
   rez <- paste(
@@ -28,37 +28,51 @@ SEM_reg <- function(y, x){
 #' Title
 #'
 #' @param variables A vector of names variables
+#' @param variance If TRUE variance of variable will be writeen
 #'
-#' @return
+#' @return return a string of model format for lavaan
 #' @export
 #'
 #' @examples
 #' SEM_cov(c("A","B","C","D"))
+#' SEM_cov(c("A","B","C","D"), variance = FALSE)
 #'
-SEM_cov<- function(variables){
-  tmp <- combn(variables,m = 2,simplify = F)
+SEM_cov<-  function(variables, variance = T){
+  tmp <- combn(variables,m = 2,simplify = F,)
   rez <-""
   for(i in tmp){
     rez <- paste(rez, paste(i,collapse = " ~~ "), "\n",sep = "")
   }
+
+  if (variance){
+    rez <- paste(rez , paste0(variables, " ~~ ", variables ,collapse = '\n',sep=""),sep="")
+
+  }
+
   attr(rez,"class") <- "SEM"
   return(rez)
 }
 
 
 
-
-#' Title
+#' Crosslag model formulat
 #'
-#' @param variables
-#' @param times
-#' @param order
-#' @param join
+#' Create a Lavaan modem formulat for a classic crosslag model
 #'
-#' @return
+#' @param variables A vector of names variables
+#' @param times names of the time indicator for the model
+#' @param order a string defining the order of the variable and the time indicator by default "times/variables" or "variables/times"
+#' @param join a string defining by what carractere are join variable and time (by default "_")
+#'
+#' @return return a lavaan formulat for a crosslag model
 #' @export
 #'
 #' @examples
+#' vars = c("x","y")
+#' t = 1:4
+#' crosslag_model(variables = vars, times = t, order = "times/variables", join="_" )
+#' crosslag_model(variables = vars, times = t, order = "variables/times", join="" )
+#'
 crosslag_model <- function(variables, times, order = "times/variables", join="_"){
 
   combi <- expand.grid(variables, times)
@@ -84,7 +98,7 @@ crosslag_model <- function(variables, times, order = "times/variables", join="_"
   covariable  <- ""
   for(time in crosslag.var){
 
-    covariable <- paste(covariable, SEM_cov(time),sep = "" )
+    covariable <- paste(covariable, SEM_cov(time), "\n",sep = "" )
   }
 
   rez <- paste(
@@ -94,14 +108,13 @@ crosslag_model <- function(variables, times, order = "times/variables", join="_"
     sep="")
 
   attr(rez,"class") <- "SEM"
-  # cat(rez)
   return(rez)
 }
 
 
 
 
-#' Title
+#' Print method for SEM class
 #'
 #' @param x
 #'

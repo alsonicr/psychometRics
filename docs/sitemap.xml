@@ -19,10 +19,28 @@
     <loc>/reference/NNT.html</loc>
   </url>
   <url>
+    <loc>/reference/RI_crosslag_model.html</loc>
+  </url>
+  <url>
+    <loc>/reference/SEM_cov.html</loc>
+  </url>
+  <url>
+    <loc>/reference/SEM_reg.html</loc>
+  </url>
+  <url>
+    <loc>/reference/SEM_reg_RI.html</loc>
+  </url>
+  <url>
+    <loc>/reference/SEM_wth_var.html</loc>
+  </url>
+  <url>
     <loc>/reference/alpha.scan.html</loc>
   </url>
   <url>
     <loc>/reference/apa.n.html</loc>
+  </url>
+  <url>
+    <loc>/reference/crosslag_model.html</loc>
   </url>
   <url>
     <loc>/reference/discrimination_cor.html</loc>
@@ -53,6 +71,9 @@
   </url>
   <url>
     <loc>/reference/print.CTT_summary.html</loc>
+  </url>
+  <url>
+    <loc>/reference/print.SEM.html</loc>
   </url>
   <url>
     <loc>/reference/print.facto.html</loc>

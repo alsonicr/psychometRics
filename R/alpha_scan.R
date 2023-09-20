@@ -63,6 +63,7 @@ alpha.scan <- function(data, items, digits=3, parallel=FALSE, verbose = TRUE) {
                        .options.snow = opts) %dopar% {
                          alpha_drop(data, items, item.drop)
                        }
+      cat("\n")
     } else {
       alpha <- foreach(item.drop = items ,
                        .combine="rbind",

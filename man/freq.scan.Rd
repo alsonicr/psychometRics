@@ -4,7 +4,7 @@
 \alias{freq.scan}
 \title{Frequency scam}
 \usage{
-freq.scan(data, items)
+freq.scan(data, items, verbose = T)
 }
 \arguments{
 \item{data}{a data.frame containing the test or scale response in columns}

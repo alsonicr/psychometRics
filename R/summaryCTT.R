@@ -17,21 +17,24 @@
 #' CTT_summary(inference, items)
 
 
-CTT_summary <- function(data,items, digits=3,...){
+CTT_summary <- function(data,items, digits=3, verbose = TRUE, ...){
 
   args <- list(...)
 
-  cat("frequence computation \n" )
-  freq <- do.call(freq.scan, list(data, items))
-  cat("item discrimination (rir,rit) computation\n" )
+  if(verbose) cat("frequence computation \n" )
+  freq <- do.call(freq.scan, list(data, items, verbose))
+  if(verbose) cat("item discrimination (rir,rit) computation\n" )
   discri <- do.call(discrimination_cor,
                     c(list(data, items),
                       args[names(args) %in% c("type", "method", "conf.level")]))
 
-  cat("alpha computation \n" )
-  alpha <- do.call(alpha.scan,
-                   c(list(data, items),
-                     args[names(args) %in% c("gain.format", 'digits', 'parallel', 'verbose' )]))
+  if(verbose) cat("alpha computation \n" )
+  alpha <- do.call(
+    alpha.scan,
+    c(
+      list(data, items, verbose=verbose),
+      args[names(args) %in% c("gain.format", 'digits', 'parallel' )])
+  )
 
   value <- list(frequence= freq,
                 discrimination=discri,
@@ -39,7 +42,6 @@ CTT_summary <- function(data,items, digits=3,...){
                 digits=digits)
 
   attr(value,"class") <- "CTT_summary"
-  # summary.CTT_summary(value)
   return(value)
 }
 
