@@ -15,7 +15,7 @@ SEM_reg_RI <- function(y,x){
     paste(paste("RI_",y,sep = ""), collapse = " + "),
     " =~ ",
     paste(paste("1*",x,sep=""), collapse = " + "),
-    "\n"
+    " \n"
   )
   attr(rez,"class") <- "SEM"
   return(rez)
@@ -33,7 +33,7 @@ SEM_reg_RI <- function(y,x){
 SEM_wth_var <- function(variables){
   rez <- ""
   for (var in variables){
-    tmp <- paste("w_",var," =~ ", "1*",var,"\n",sep="")
+    tmp <- paste("w_",var," =~ ", "1*",var," \n",sep="")
     rez <- paste(rez, tmp, sep = "")
   }
   attr(rez,"class") <- "SEM"
@@ -87,14 +87,14 @@ RI_crosslag_model <- function(variables,times, order = "times/variables", join="
   }
 
   ## Crosslag
-  crosslag <- crosslag_model(paste("w_",variables,sep=""),times = 1:3, order=order, join=join)
+  crosslag <- crosslag_model(variables,times = times, order=order, join=join,prefix="w_")
 
 
   value <- paste0(
-    "## Random intercept \n",RI_reg,"\n",
-    "## Randow Intercept cov \n", RI_cov,"\n",
-    "## within-person centered variables \n",wth_var,"\n",
-    "## Crosslag \n", crosslag,"\n"
+    "## Random intercept \n",RI_reg," \n",
+    "## Randow Intercept cov \n", RI_cov," \n",
+    "## within-person centered variables \n",wth_var," \n",
+    "## Crosslag \n", crosslag," \n"
   )
 
   class(value)<- c("SEM","RI-CLPM")

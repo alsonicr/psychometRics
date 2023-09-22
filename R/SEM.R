@@ -73,7 +73,7 @@ SEM_cov<-  function(variables, variance = T){
 #' crosslag_model(variables = vars, times = t, order = "times/variables", join="_" )
 #' crosslag_model(variables = vars, times = t, order = "variables/times", join="" )
 #'
-crosslag_model <- function(variables, times, order = "times/variables", join="_"){
+crosslag_model <- function(variables, times, order = "times/variables", join="_", prefix=NULL){
 
   combi <- expand.grid(variables, times)
 
@@ -82,6 +82,9 @@ crosslag_model <- function(variables, times, order = "times/variables", join="_"
   } else {
     crosslag.var = paste0(combi[,1], join, combi[,2])
   }
+
+  if(!is.null(prefix)){ crosslag.var = paste0(prefix, crosslag.var)}
+
 
   max <- length(variables)
   x <- seq_along(crosslag.var)
@@ -92,7 +95,7 @@ crosslag_model <- function(variables, times, order = "times/variables", join="_"
   regression <-""
   for(time in 1:length(crosslag.var)){
     if (time == length(crosslag.var)) { break }
-    regression <- paste(regression, SEM_reg(crosslag.var[[time]], crosslag.var[[time+1]]),sep="")
+    regression <- paste(regression, SEM_reg(crosslag.var[[time+1]],crosslag.var[[time]]),sep="")
   }
   ### Covariate part
   covariable  <- ""
