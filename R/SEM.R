@@ -12,14 +12,28 @@
 #' SEM_reg("Y","x")
 #' SEM_reg("Y",c("x1","x2","x3"))
 #' SEM_reg(c("Y1","Y2","Y3"),c("x1","x2","x3"))
+#' SEM_reg("Y",c("x1","x2","x3"), latent=T)
 #'
-SEM_reg <- function(y, x){
+#'
+SEM_reg <- function(y, x, latent=FALSE){
+
+
   rez <- paste(
     paste(y, collapse = " + "),
     " ~ ",
     paste(x, collapse = " + "),
     "\n"
   )
+
+  if(latent){
+    rez <- paste(
+      paste(y, collapse = " + "),
+      " ~= ",
+      paste(x, collapse = " + "),
+      "\n"
+    )
+  }
+
   attr(rez,"class") <- "SEM"
   return(rez)
 }
