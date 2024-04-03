@@ -172,6 +172,79 @@ factor_comparison <- function(data, items, factors){
 }
 
 
+
+#' Factor comparison
+#'
+#' Compute anova and fit index to compare multiple factor analyse fit for multiple factors solution
+#'
+#' @param data a data.frame containing the test or scale response in columns
+#' @param items The name of the items
+#' @param factors a facto class object from factor_explorer() or a vector with the number of factor
+#'
+#' @return a table with a CHI² comparison and CFI, TLI, RMSEA and SRMR differences
+#' @export
+#' @import dplyr
+#' @importFrom psych fa
+#' @importFrom psych anova.psych
+#'
+#' @examples
+#' data("inference")
+#' items <- c(paste0("item_0",3:9),"item_10")
+#' f <- factor_explorer(inference, items)
+#' factor_comparison2(inference, items, f)
+#' factor_comparison2(inference, items, c(1,2,3))
+
+
+
+factor_comparison2 <- function(data, items, nfactors, ...){
+
+  tmp <- efa(inference[,items ], nfactors = nfactors, ...)
+  fit = fitmeasures(tmp,c('cfi','tli','rmsea','srmr'))
+  fit = as.data.frame(t(fit)) %>%
+    dplyr::mutate(
+      d.CFI = cfi - lag(cfi),
+      d.TLI = tli - lag(tli),
+      d.RMSEA = rmsea - lag(rmsea),
+      d.SRMR = srmr - lag(srmr))
+
+  evaluation <- "lavaan::lavTestLRT("
+  efas <- paste("tmp[[",nfactors,"]]")
+  efas <- paste0(efas, collapse = ", ")
+  f <- paste0(evaluation, efas, ")")
+  model.comp <- eval(parse(text=f))
+  model.comp = as.data.frame(model.comp)
+
+  model.comp = model.comp %>% arrange(-Df) %>%
+    mutate(
+      `Chisq diff`=lag(`Chisq diff`),
+      RMSEA = lag(RMSEA),
+      `Df diff` = lag (`Df diff`),
+      `Pr(>Chisq)`  = lag(`Pr(>Chisq)`)
+    )
+
+  rownames(model.comp) <- paste0("nfactors = ",nfactors)
+
+  rez <- cbind(model.comp, fit)
+  factor.model <- vector("list")
+  factor.model[["model comparaison"]] <- rez
+  class(factor.model) <- 'factor.comparaison'
+
+  return(factor.model)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #' Print method for factor_comparaison
 #'
 #' @param x a factor.comparaison class
