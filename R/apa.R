@@ -31,6 +31,8 @@ apa.n <- function(x, d = 2, oto = F, p = F) {
     res <- strsplit(res,".",fixed = T)
     res[[1]][1] <- substr(res[[1]][1], 0, nchar(res[[1]][1])-1)
     res <- paste(res[[1]],collapse = ".")
+
+    if (res == ".000") res <- ".001"
     return(res)
   }else{
     return(res)

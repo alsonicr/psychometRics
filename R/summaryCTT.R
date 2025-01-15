@@ -71,3 +71,29 @@ print.CTT_summary <- function(x){
 
 
 
+#' Print Method for CTT_summary
+#'
+#' @param x
+#'
+#' @return print the result of the function
+#' @export
+#' @importFrom knitr kable
+#' @examples
+#' data("inference")
+#' items <- c(paste0("item_0",3:9),"item_10")
+#' t <- CTT_summary(inference, items)
+#' print(t)
+#'
+
+summary.CTT_summary <- function(x){
+  freq <- x$frequence
+  disc <- x$discrimination[,names(x$discrimination) %in% c("item","r","somers.d","polyserial")]
+  alpha <- x$alpha[,names(x$alpha) %in% c("item","alpha.gain","drop.alpha","p.value")]
+  summa <- merge(freq,disc ,by="item")
+  summa <- merge(summa,alpha ,by="item")
+  cat(" Results summary : ")
+  print(knitr::kable(summa,'simple',digits = x$digits))
+
+  invisible(summa)
+}
+

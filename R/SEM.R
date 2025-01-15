@@ -28,7 +28,7 @@ SEM_reg <- function(y, x, latent=FALSE){
   if(latent){
     rez <- paste(
       paste(y, collapse = " + "),
-      " ~= ",
+      " =~ ",
       paste(x, collapse = " + "),
       "\n"
     )

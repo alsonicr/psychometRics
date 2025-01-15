@@ -184,8 +184,8 @@ factor_comparison <- function(data, items, factors){
 #' @return a table with a CHI² comparison and CFI, TLI, RMSEA and SRMR differences
 #' @export
 #' @import dplyr
-#' @importFrom psych fa
-#' @importFrom psych anova.psych
+#' @importFrom lavaan efa
+#' @importFrom lavaan fitmeasures
 #'
 #' @examples
 #' data("inference")
@@ -198,7 +198,7 @@ factor_comparison <- function(data, items, factors){
 
 factor_comparison2 <- function(data, items, nfactors, ...){
 
-  tmp <- efa(inference[,items ], nfactors = nfactors, ...)
+  tmp <- efa(data[,items ], nfactors = nfactors, ...)
   fit = fitmeasures(tmp,c('cfi','tli','rmsea','srmr'))
   fit = as.data.frame(t(fit)) %>%
     dplyr::mutate(
@@ -227,6 +227,7 @@ factor_comparison2 <- function(data, items, nfactors, ...){
   rez <- cbind(model.comp, fit)
   factor.model <- vector("list")
   factor.model[["model comparaison"]] <- rez
+  factor.model[["models"]] <- tmp
   class(factor.model) <- 'factor.comparaison'
 
   return(factor.model)

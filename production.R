@@ -3,3 +3,4 @@ roxygen2::roxygenize()
 usethis::use_pkgdown()
 pkgdown::build_site()
 devtools::test()
+

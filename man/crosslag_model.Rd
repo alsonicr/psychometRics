@@ -4,7 +4,13 @@
 \alias{crosslag_model}
 \title{Crosslag model formulat}
 \usage{
-crosslag_model(variables, times, order = "times/variables", join = "_")
+crosslag_model(
+  variables,
+  times,
+  order = "times/variables",
+  join = "_",
+  prefix = NULL
+)
 }
 \arguments{
 \item{variables}{A vector of names variables}

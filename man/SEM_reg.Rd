@@ -4,7 +4,7 @@
 \alias{SEM_reg}
 \title{SEM regression model}
 \usage{
-SEM_reg(y, x)
+SEM_reg(y, x, latent = FALSE)
 }
 \arguments{
 \item{y}{A vector of string who contain the name of the predicted variable}
@@ -22,5 +22,7 @@ SEM regression model
 SEM_reg("Y","x")
 SEM_reg("Y",c("x1","x2","x3"))
 SEM_reg(c("Y1","Y2","Y3"),c("x1","x2","x3"))
+SEM_reg("Y",c("x1","x2","x3"), latent=T)
+
 
 }
