@@ -1,0 +1,120 @@
+
+
+#' Correlation Answer Rest (RAR)
+#'
+#' The function computes correlations for Multiple Choice Questions (MCQs) and
+#' provides a correlation between an answer and the score-rest. Normally the
+#' result for the correct answer (Key) is similar to the RIR results. The result
+#' of the RAR can identify problems such as weak distractors, ambiguous
+#' distractors (look-alike correct answers), or key errors.
+#' @param data.score A data.frame containing the items scale response in columns
+#' @param data.response A data.frame containing the answer response in columns
+#' @param items.rar a Vector of all the RAR items names
+#' @param items a Vector of all the test items names
+#' @details In RAR the correct answer is also called the "key". Normally the result
+#' for the key is equal to the RIR score of the item. Other items, called distractors,
+#' should normally have a negative correlation with the total score. Ambiguous distractors
+#' are distractors whose RAR could be positive. A wrong answer (i.e., selection of a distractor)
+#' should not be positively correlated with participant score; if it is, higher-performing
+#' participants tend to select this distractor. This could result from an incorrect key
+#' or ambiguous item wording.
+#' @return the result provide a print of the factor detected for each of the method
+#' @references reference
+#' @seealso \code{\link{detec.rar.warning}}, \code{\link{eval.ctt}}
+#'
+#' @export
+#' @import dplyr
+#' @export
+#'
+#' @examples
+#'
+#' item.1 <- c(rep("A", 15), rep("B", 10), rep("C", 15))
+#' item.2 <- c(rep("A", 10), rep("B", 15), rep("C", 15))
+#' item.3 <- c(rep("A", 5), rep("B", 15), rep("C", 20))
+#' item.4 <- c(rep("A", 3), rep("B", 19), rep("C", 18))
+#' item.5 <- c(rep("A", 11), rep("B", 13), rep("C", 16))
+#'
+#' dat.response <- data.frame(
+#'   item.1 = item.1,
+#'   item.2 = item.2,
+#'   item.3 = item.3,
+#'   item.4 = item.4,
+#'   item.5 = item.5
+#' )
+#'
+#' key <- c("A","B","C","A","B")
+#'
+#' dat.score <- data.frame()
+#' for (i in 1:nrow(dat.response)){
+#'   tmp <- dat.response[i,] == key
+#'   dat.score <- rbind(dat.score, as.data.frame(tmp))
+#' }
+#'
+#' dat.score <- as.data.frame(sapply(dat.score,as.numeric))
+#'
+#' rez <- scan.rar(dat.score, dat.response, items.rar = paste0("item.",1:5))
+#' rez
+
+
+
+
+
+
+scan.rar <- function(data.score, data.response, items.rar, items = NULL){
+
+  if(is.null(items)) items <- items.rar
+
+  rar <- data.frame()
+
+  for(item in items.rar){
+    rez = c()
+
+    ### Response options
+    response_option <- sort(unique(data.response[,item]))
+
+    ### Rar computation
+    for(alt in  response_option){
+      comp <- ifelse(data.response[,item] == alt, 1, 0)
+      score <- rowSums(data.score %>% select(items) %>% select(-item),na.rm = T)
+      tmp <- cor(comp, score, use="complete.obs")
+      rez <- c(rez, tmp)
+    }
+
+    ### Data format
+    tmp <- list()
+    tmp[["item"]] <- item
+    for (i in 1:length(response_option)){
+      tmp[response_option[i]] <- rez[i]
+    }
+
+    rar <- plyr::rbind.fill(rar, as.data.frame(tmp))
+
+  }
+
+  rez <- list()
+  rez[["param"]][["items"]] <- items
+  rez[["param"]][["items.rar"]] <- items.rar
+  rez[["param"]][["data.response"]] <- data.response
+  rez[["param"]][["data.score"]] <- data.score
+  rez[["rar"]] <- rar
+
+  class(rez) <- c("psychometRic", "rar" , class(rez))
+  # print(rez$rar %>% mutate_if(is.numeric, round, digits=3))
+  return(rez)
+}
+
+
+#' Print method for the rar class
+#'
+#' @param x An alpha class object
+#'
+#' @return print the result of the function
+#' @export
+#' @importFrom dplyr
+
+print.rar <- function(x){
+  x <- x$rar  %>% as.data.frame() %>% mutate_if(is.numeric, round, digits=3)
+  print(x)
+}
+
+

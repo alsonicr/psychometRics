@@ -1,66 +1,45 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/readme.html</loc>
-  </url>
-  <url>
-    <loc>/reference/CTT_summary.html</loc>
-  </url>
-  <url>
-    <loc>/reference/NNT.html</loc>
-  </url>
-  <url>
-    <loc>/reference/alpha.scan.html</loc>
-  </url>
-  <url>
-    <loc>/reference/apa.n.html</loc>
-  </url>
-  <url>
-    <loc>/reference/discrimination_cor.html</loc>
-  </url>
-  <url>
-    <loc>/reference/fa.CFI.html</loc>
-  </url>
-  <url>
-    <loc>/reference/factor_comparaison.html</loc>
-  </url>
-  <url>
-    <loc>/reference/factor_comparison.html</loc>
-  </url>
-  <url>
-    <loc>/reference/factor_explorer.html</loc>
-  </url>
-  <url>
-    <loc>/reference/freq.scan.html</loc>
-  </url>
-  <url>
-    <loc>/reference/freq_scan.html</loc>
-  </url>
-  <url>
-    <loc>/reference/hello.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/print.CTT_summary.html</loc>
-  </url>
-  <url>
-    <loc>/reference/print.facto.html</loc>
-  </url>
-  <url>
-    <loc>/reference/print.factor.comparaison.html</loc>
-  </url>
-  <url>
-    <loc>/reference/weighted.mean2.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/use_case.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/reference/EFA.comp.html</loc></url>
+<url><loc>/reference/EFA.explo.html</loc></url>
+<url><loc>/reference/NNT.html</loc></url>
+<url><loc>/reference/RI_crosslag_model.html</loc></url>
+<url><loc>/reference/SEM_cov.html</loc></url>
+<url><loc>/reference/SEM_reg.html</loc></url>
+<url><loc>/reference/SEM_reg_RI.html</loc></url>
+<url><loc>/reference/SEM_wth_var.html</loc></url>
+<url><loc>/reference/apa.n.html</loc></url>
+<url><loc>/reference/apa.p.html</loc></url>
+<url><loc>/reference/crosslag_model.html</loc></url>
+<url><loc>/reference/detecCTT-class.html</loc></url>
+<url><loc>/reference/detecRar-class.html</loc></url>
+<url><loc>/reference/detect.eval.ctt.warn.html</loc></url>
+<url><loc>/reference/detect.rar.warning.html</loc></url>
+<url><loc>/reference/eval.ctt.html</loc></url>
+<url><loc>/reference/factor_explorer.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/print.EFA.comp.html</loc></url>
+<url><loc>/reference/print.EFA.explo.html</loc></url>
+<url><loc>/reference/print.SEM.html</loc></url>
+<url><loc>/reference/print.alpha.html</loc></url>
+<url><loc>/reference/print.detecCTT.html</loc></url>
+<url><loc>/reference/print.detecRar.html</loc></url>
+<url><loc>/reference/print.difficulty.html</loc></url>
+<url><loc>/reference/print.discrimination.html</loc></url>
+<url><loc>/reference/print.eval.ctt.html</loc></url>
+<url><loc>/reference/print.facto.html</loc></url>
+<url><loc>/reference/print.frequency.html</loc></url>
+<url><loc>/reference/print.rar.html</loc></url>
+<url><loc>/reference/scan.alpha.html</loc></url>
+<url><loc>/reference/scan.diff.html</loc></url>
+<url><loc>/reference/scan.disc.html</loc></url>
+<url><loc>/reference/scan.freq.html</loc></url>
+<url><loc>/reference/scan.rar.html</loc></url>
+<url><loc>/reference/summary-EFA.comp-method.html</loc></url>
+<url><loc>/reference/summary.eval.ctt.html</loc></url>
 </urlset>
+

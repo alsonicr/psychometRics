@@ -5,9 +5,8 @@
 #' @param vector scale mean response in columns for each social group
 #' @param vector percentage of each social group in the people
 #' @param vector percentage of each social group in the sample
-#'
+#' @noRd
 #' @return the weighted mean and weighted standard deviation
-#' @export
 #' @examples
 #' 1+1
 #' group.mean <- c(10,23,15,16)

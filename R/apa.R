@@ -31,8 +31,39 @@ apa.n <- function(x, d = 2, oto = F, p = F) {
     res <- strsplit(res,".",fixed = T)
     res[[1]][1] <- substr(res[[1]][1], 0, nchar(res[[1]][1])-1)
     res <- paste(res[[1]],collapse = ".")
+
+    if (res == ".000") res <- ".001"
     return(res)
   }else{
     return(res)
   }
 }
+
+
+
+
+#' APA formating number 2
+#'
+#' @param n numeric value
+#' @importFrom stringr str_count
+#' @importFrom stringr str_sub
+#'
+#' @export
+apa.p <- function(n, pval, d = 3){
+  rez <- c()
+  for(i in seq_along(n)){
+    # cat(n[i],pval[i])
+    p="   "
+    if(pval[i] < 0.10) p ="†  "
+    if(pval[i] < 0.05) p ="*  "
+    if(pval[i] < 0.01) p ="** "
+    if(pval[i] < 0.001) p ="***"
+    tmp <- paste0(apa.n(n[i],d = d),p)
+    rez <- c(rez, tmp)
+  }
+  t = min(str_count(rez," "))
+  rez <- str_sub(rez, end = -(t+1))
+  return(rez)
+}
+
+

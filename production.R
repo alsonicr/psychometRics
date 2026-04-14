@@ -1,4 +1,6 @@
 devtools::document()
 roxygen2::roxygenize()
+usethis::use_pkgdown()
+# usethis::use_pkgdown_github_pages()
 pkgdown::build_site()
-devtools::test()
+# devtools::test()

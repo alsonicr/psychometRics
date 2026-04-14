@@ -1,0 +1,169 @@
+
+---
+title: Example and use case
+author: Nicolas Rochat
+editor_options: 
+  chunk_output_type: console
+---
+
+
+
+
+
+## A classic scale
+
+For this use case we will use the data from Rochat et al. (2025). The scale is an
+inference measure scale for children between 6 and 10 years old and is considered
+as a factor of comprehension.
+
+We start by importing the data and defining the items for the analysis.
+
+```{r}
+#| message: false
+#| warning: false
+
+library(psychometRics)
+library(dplyr)
+library(kableExtra)
+
+data("inference")
+items <- c(paste0("item_0",3:9),"item_10")
+head(inference)
+
+```
+
+Now we can run the functions to evaluate classical test theory: frequency of answers, item difficulty, item discrimination, and Cronbach's alpha.
+
+```{r}
+scan.freq(data = inference, items = items)
+scan.diff(data = inference, items = items)
+scan.disc(data = inference, items = items)
+scan.alpha(data = inference, items = items)
+```
+
+All those functions can be executed in a single command.
+
+
+```{r}
+eval1 = eval.ctt(inference, items)
+eval1
+```
+
+
+A detection function to identify problematic items can also be run. The objective of the function is to provide assistance in detecting weak items.
+It returns a list of items and the reason for each flag. When using the `summary` method, a kable table highlighting the flagged values is produced.
+
+```{r}
+d.eval1 <- detect.eval.ctt.warn(eval1)
+d.eval1
+```
+
+
+
+By default, the detection method uses standard values, but you can increase the requirements to ensure higher quality.
+
+```{r}
+
+d.eval1.alt <- detect.eval.ctt.warn(eval1,threshold.disc = 0.35)
+
+```
+```{r}
+#| echo: true 
+#| eval: false
+
+summary(d.eval1.alt)
+
+```
+```{r}
+#| echo: false 
+d.eval1.alt
+d.eval1.alt$table %>% kbl(escape = FALSE) %>% kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+
+
+
+## The case of Multiple Choice Questions
+
+
+Some test evaluations often include MCQs. MCQs are generally constituted by a correct answer (called the key) and incorrect answers (distractors).
+Those alternatives can be inspected to detect issues.
+
+
+
+```{r}
+item.1 <- c(rep("A", 15), rep("B", 10), rep("C", 15))
+item.2 <- c(rep("A", 10), rep("B", 15), rep("C", 15))
+item.3 <- c(rep("A", 5), rep("B", 15), rep("C", 20))
+item.4 <- c(rep("A", 3), rep("B", 19), rep("C", 18))
+item.5 <- c(rep("A", 11), rep("B", 13), rep("C", 16))
+
+dat.response <- data.frame(
+  item.1 = item.1,
+  item.2 = item.2,
+  item.3 = item.3,
+  item.4 = item.4,
+  item.5 = item.5
+)
+
+key <- c("A","B","C","A","B")
+
+dat.score <- data.frame()
+for (i in 1:nrow(dat.response)){
+  tmp <- dat.response[i,] == key
+  dat.score <- rbind(dat.score, as.data.frame(tmp))
+}
+
+dat.score <- as.data.frame(sapply(dat.score,as.numeric))
+```
+
+
+```{r}
+rar <- scan.rar(dat.score,items = paste0("item.",1:5),data.response = dat.response,items.rar = paste0("item.",1:5))
+rar
+
+d.rar <- detect.rar.warning(rar, keys = key)
+d.rar
+```
+
+
+
+```{r}
+#| echo: true 
+#| eval: false
+
+summary(d.eval1.alt)
+
+```
+```{r}
+#| echo: false 
+d.rar
+object = d.rar
+
+  tmp <- object$data_rar %>%  mutate_if(is.numeric, round, digits = 3 )
+  tmp[object$aggregate.warning] <- cell_spec(tmp[object$aggregate.warning],  background = "red")
+
+  ambigus.distractor <- rowSums(object$ambigus.distractor)
+  weak.key <-  rowSums(object$weak.key)
+   if(!is.null(object$uncredible.distractor)) {
+    uncredible.distractor <- rowSums(object$uncredible.distractor)
+  } else {
+    uncredible.distractor <- NA
+  }
+
+  tmp2 <- data.frame(ambigus.distractor,weak.key,uncredible.distractor)
+  tmp2[tmp2>0 & !is.na(tmp2)] <- cell_spec(tmp2[tmp2>0 & !is.na(tmp2)],  background = "red")
+
+ object$data_info |> cbind(tmp,tmp2) %>%
+    kbl( booktabs = T, digits = 3, longtable = T,escape = F) %>%
+    kable_paper("striped", full_width = F)
+```
+
+
+
+
+
+
+## References
+
+Rochat, N., Lima, L., & Bressoux, P. (2025). *The Riddle Knowledge Inference Test (R-Kit)*. Journal of Psychoeducational Assessment, 43(3), 328-343.
