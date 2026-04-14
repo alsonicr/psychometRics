@@ -1,0 +1,88 @@
+# Correlation Answer Rest (RAR) warning table
+
+The function provide assistance to detect red flag item in the
+`scan.RAR` result. It provide detection for ambigus distractor and weak
+key selection.
+
+## Usage
+
+``` r
+detect.rar.warning(
+  rar,
+  keys,
+  nbr.option = NULL,
+  threshold.k = 0.2,
+  threshold.d = -0.05
+)
+```
+
+## Arguments
+
+- keys:
+
+  A vector of correct answered for each items
+
+- threshold.k:
+
+  A minimun threshold for the key to be considered acceptable (weak key
+  detection)
+
+- data:
+
+  A psychometric rar class data containing the results for rar
+
+- response.columns:
+
+  Avector containing the name of each colomn containing possible answer
+
+- threshold.D:
+
+  A maximun threshold for a distractor to be considered acceptable
+  (ambigus distractor detection)
+
+## Value
+
+A class detecRar list with table of item detection and kable table to
+visualise the problematics items
+
+## See also
+
+`scan.RAR`, [`eval.ctt`](eval.ctt.md)
+
+## Examples
+
+``` r
+library(psychometRics)
+library(dplyr)
+
+ item.1 <- c(rep("A", 15), rep("B", 10), rep("C", 15))
+ item.2 <- c(rep("A", 10), rep("B", 15), rep("C", 15))
+ item.3 <- c(rep("A", 5), rep("B", 15), rep("C", 20))
+ item.4 <- c(rep("A", 3), rep("B", 19), rep("C", 18))
+ item.5 <- c(rep("A", 11), rep("B", 13), rep("C", 16))
+
+ dat.response <- data.frame(
+   item.1 = item.1,
+   item.2 = item.2,
+   item.3 = item.3,
+   item.4 = item.4,
+   item.5 = item.5
+ )
+
+ key <- c("A","B","C","A","B")
+
+ dat.score <- data.frame()
+ for (i in 1:nrow(dat.response)){
+   tmp <- dat.response[i,] == key
+   dat.score <- rbind(dat.score, as.data.frame(tmp))
+ }
+
+ dat.score <- as.data.frame(sapply(dat.score,as.numeric))
+
+rar <- scan.rar(dat.score, dat.response, items.rar = paste0("item.",1:5))
+rez = detect.rar.warning(data = rar, keys = key, response.columns = names(rar)[-1])
+#> Error in detect.rar.warning(data = rar, keys = key, response.columns = names(rar)[-1]): unused arguments (data = rar, response.columns = names(rar)[-1])
+rez
+#> Error: object 'rez' not found
+
+```

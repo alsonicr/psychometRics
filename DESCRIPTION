@@ -1,15 +1,14 @@
 Package: psychometRics
 Type: Package
-Title: What the Package Does (Title Case)
+Title: tools for test and scale validation
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: Nicolas Rochat
+Maintainer: Nicolas Rochat
+Description: The package provide warper function for psychometric purpose, the objectif is to streamline commun analyse and evaluate test or scale quality
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Depends:
     R (>= 4.1.2)
 Imports: 
@@ -20,7 +19,12 @@ Imports:
   tibble,
   dplyr,
   knitr,
-  psych
+  psych,
+  stringr,
+  kableExtra
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+articles:
+  contents:
+  - use_case

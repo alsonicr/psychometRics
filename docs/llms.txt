@@ -1,0 +1,96 @@
+# PsychometRics
+
+PsychometRics is an R package providing functions for psychometric
+analysis. The package wraps several helper functions to offer efficient,
+fast methods for common psychometric analyses.
+
+## How it helps psychometric analysis
+
+The package offers wrapper functions focused on Classical Test Theory
+(CTT) and factor analysis (FA). These functions help identify
+potentially weak items by producing diagnostic warnings. Interpret these
+warnings and decisions to remove items carefully, as they require
+subject-matter judgement.
+
+## Install
+
+``` r
+install.packages("devtools")
+library(devtools)
+install_github("alsonicr/psychometRics")
+```
+
+## To do
+
+In order:
+
+1.  Add references to function descriptions and evaluation norms
+2.  Add missing-data options (imputation, MICE) for alpha and parallel
+    functions
+3.  Reformat RAR function to optimize parameters
+    - Create helper for multiple selection
+    - Test for unused distractors
+4.  Create a detect method to provide warnings
+5.  Add remaining kwargs and examples
+
+# Package index
+
+## All functions
+
+- [`EFA.comp()`](EFA.comp.md) : EFA comparaison model
+- [`EFA.explo()`](EFA.explo.md) : FA.exploratory
+- [`NNT()`](NNT.md) : The number needed to treat (NNT)
+- [`RI_crosslag_model()`](RI_crosslag_model.md) : The random intercept
+  crosslag panel model
+- [`SEM_cov()`](SEM_cov.md) : Title
+- [`SEM_reg()`](SEM_reg.md) : SEM regression model
+- [`SEM_reg_RI()`](SEM_reg_RI.md) : Regression Random Intercept
+- [`SEM_wth_var()`](SEM_wth_var.md) : Title
+- [`apa.n()`](apa.n.md) : APA formating number
+- [`apa.p()`](apa.p.md) : APA formating number 2
+- [`crosslag_model()`](crosslag_model.md) : Crosslag model formulat
+- [`detecCTT-class`](detecCTT-class.md) : a summary function for
+  detecCTT class
+- [`detecRar-class`](detecRar-class.md) : a summary function for
+  detecRar class
+- [`detect.eval.ctt.warn()`](detect.eval.ctt.warn.md) : Classical test
+  theory evaluation warning table
+- [`detect.rar.warning()`](detect.rar.warning.md) : Correlation Answer
+  Rest (RAR) warning table
+- [`eval.ctt()`](eval.ctt.md) : Classical Test Theory Summary
+- [`factor_explorer()`](factor_explorer.md) : Factor explorer
+- [`print(`*`<EFA.comp>`*`)`](print.EFA.comp.md) : Print method for the
+  rar class
+- [`print(`*`<EFA.explo>`*`)`](print.EFA.explo.md) : Facto print method
+- [`print(`*`<SEM>`*`)`](print.SEM.md) : Print method for SEM class
+- [`print(`*`<alpha>`*`)`](print.alpha.md) : Print method for the alpha
+  class
+- [`print(`*`<detecCTT>`*`)`](print.detecCTT.md) : a print function for
+  detecCTT class
+- [`print(`*`<detecRar>`*`)`](print.detecRar.md) : a print function for
+  deteRar class
+- [`print(`*`<difficulty>`*`)`](print.difficulty.md) : Print method for
+  the difficulty class
+- [`print(`*`<discrimination>`*`)`](print.discrimination.md) : Print
+  method for the difficulty class
+- [`print(`*`<eval.ctt>`*`)`](print.eval.ctt.md) : Print Method for
+  CTT_summary
+- [`print(`*`<facto>`*`)`](print.facto.md) : Facto print method
+- [`print(`*`<frequency>`*`)`](print.frequency.md) : Print method for
+  the frequency class
+- [`print(`*`<rar>`*`)`](print.rar.md) : Print method for the rar class
+- [`scan.alpha()`](scan.alpha.md) : Cronbach alpha scan
+- [`scan.diff()`](scan.diff.md) : Difficulty scan
+- [`scan.disc()`](scan.disc.md) : Discrimination correlation
+- [`scan.freq()`](scan.freq.md) : Frequency scan
+- [`scan.rar()`](scan.rar.md) : Correlation Answer Rest (RAR)
+- [`summary(`*`<EFA.comp>`*`)`](summary-EFA.comp-method.md) : summary
+  method for EFA.comp
+- [`summary.eval.ctt()`](summary.eval.ctt.md) : Print Method for
+  CTT_summary
+
+# Articles
+
+### All vignettes
+
+- [Example and use case](use_case.md):

@@ -1,0 +1,275 @@
+
+
+#' Factor explorer
+#'
+#' the function use parallel analyse, Velicer and VSS method to provide the possible number of factor.
+#'
+#' @param data a data.frame containing the test or scale response in columns
+#' @param items The name of the items
+#' @param plot Plot vss and parallel
+#' @param ...
+#'
+#' @return the result provide a print of the factor detected for each of the method
+#' @importFrom  psych fa.parallel
+#' @importFrom  psych vss
+#' @examples
+#' data("inference")
+#' items <- c(paste0("item_0",3:9),"item_10")
+#' factor_explorer(inference, items)
+
+factor_explorer <- function(data, items, plot = FALSE, ...){
+  quiet <- function(x) {
+    sink(tempfile())
+    on.exit(sink())
+    invisible(force(x))
+  }
+
+  kmo <- psych::KMO(data[,items])
+  bartlett <- bartlett.test(data[,items])
+
+  an1 <-quiet( psych::fa.parallel(data[,items],fa = "fa",plot = plot))
+  Kaiser.criterion <- sum(an1$fa.values >= 1)
+  an2 <- psych::vss(data[,items], plot = plot)
+
+  factor <- list("parallele"= an1$nfact,
+                 "VSS complexity 1"=which.max(an2$cfit.1),
+                 "VSS complexity 2"=which.max(an2$cfit.2),
+                 "Velicer MAP"= which.min(an2$map),
+                 "kaiser criterion" = Kaiser.criterion,
+                 "BIC" = which.min(an2[["vss.stats"]]$BIC),
+                 "eBIC" = which.min(an2[["vss.stats"]]$eBIC)
+  )
+
+
+
+
+  value <- list(
+    "kmo" = kmo,
+    "Bartlett.test" = bartlett,
+    "paralle analysis" = an1,
+    "vss analysis" = an2,
+    "factor"= factor
+  )
+
+  class(value) <- 'facto'
+  return(value)
+}
+
+
+#' Facto print method
+#'
+#' formating result for the facto class
+#'
+#' @param x a facto class object
+#'
+#' @examples
+#' data("inference")
+#' items <- c(paste0("item_0",3:9),"item_10")
+#' f <- factor_explorer(inference, items)
+#' print(t)
+
+print.facto <- function(x){
+
+  cat(
+    "\n \n",
+    " ### EFA analysis and adequacy ###",
+    "\n \n"
+  )
+
+  if (x$Bartlett.test$p.value< 0.05) {
+    bartlett.interpretation <- "The Bartlett's test of sphericity was significant at an alpha level of .05. \n These data are probably suitable for factor analysis \n"
+  } else {
+    "The Bartlett's test of sphericity was NOT significant at an alpha level of .05. \n These data are probably NOT suitable for factor analysis \n"
+  }
+  cat("Bartlett's K-squared =", round(x$Bartlett.test$statistic,2), "df =",x$Bartlett.test$parameter , "p-value <",x$Bartlett.test$p.value, "\n")
+  cat(bartlett.interpretation,"\n \n")
+
+
+  if (x$kmo$MSA < 0.5) kmo.interpretation <- "Unacceptable – Bad"
+  if (x$kmo$MSA >= 0.5 & x$kmo$MSA < 0.6) kmo.interpretation <- "Miserable – Bad"
+  if (x$kmo$MSA >= 0.6 & x$kmo$MSA < 0.7) kmo.interpretation <- "Mediocre – Okay"
+  if (x$kmo$MSA >= 0.7 & x$kmo$MSA < 0.8) kmo.interpretation <- "Middling – Okay"
+  if (x$kmo$MSA >= 0.8 & x$kmo$MSA < 0.9) kmo.interpretation <- "Meritorious – Good"
+  if (x$kmo$MSA >= 0.9 ) kmo.interpretation <- "Marvelous – Great"
+  cat("KMO Measure of Sampling Adequacy = ", round(x$kmo$MSA,3), "can be considerate for factor analysis has", kmo.interpretation ,"\n \n" )
+
+
+  cat("Parallele analysis factor solution : ", x$factor$parallele[1], "\n")
+  cat("VSS complexity 1 factor solution   : ", x$factor$`VSS complexity 1`[1], "\n")
+  cat("VSS complexity 2 factor solution   : ", x$factor$`VSS complexity 2`[1], "\n")
+  cat("Velicer MAP factor solution        : ", x$factor$`Velicer MAP`[1], "\n")
+  cat("kaiser criterion                   : ", x$factor$`kaiser criterion`[1], "\n")
+  cat("BICfactor solution                 : ", x$factor$BIC[1], "\n")
+  cat("eBIC factor solution               : ", x$factor$eBIC[1], "\n")
+}
+
+
+
+
+
+
+
+
+#' Factor comparison
+#'
+#' Compute anova and fit index to compare multiple factor analyse fit for multiple factors solution
+#'
+#' @param data a data.frame containing the test or scale response in columns
+#' @param items The name of the items
+#' @param factors a facto class object from factor_explorer() or a vector with the number of factor
+#'
+#' @return a table with a CHI² comparison and CFI, TLI, RMSEA and SRMR differences
+#' @import dplyr
+#' @importFrom psych fa
+#' @importFrom psych anova.psych
+#' @noRd
+#' @examples
+#' data("inference")
+#' items <- c(paste0("item_0",3:9),"item_10")
+#' f <- factor_explorer(inference, items)
+#' factor_comparison(inference, items, f)
+#' factor_comparison(inference, items, c(1,2,3))
+
+factor_comparison <- function(data, items, factors){
+  message("deprecated use EFA_comp() instead")
+  if(class(factors)=="facto"){
+    factors <-unique(as.numeric(unlist(factors[["factor"]])))
+  }
+  factors <- sort(factors)
+
+  factor.model <- vector("list")
+
+  for (factor in factors){
+    # nfactor <- factor
+    tmp <- vector("list")
+    FA <- psych::fa(data[,items], nfactors = factor)
+    tmp[["model"]]  <- FA
+    tmp[["fit"]] <- data.frame(
+
+      "CFI"= fa.CFI(FA),
+      "TLI"= FA$TLI,
+      "RMSEA" = ifelse(is.null(FA$RMSEA[1]),NA,FA$RMSEA[1]),
+      "SRMR" = FA$rms
+    )
+
+
+    factor.model[[as.character(factor)]]<- tmp
+  }
+
+  fit.comp <- data.frame()
+  for(i in 1:length(factor.model)){
+    fit.comp <-rbind(fit.comp,factor.model[[i]]$fit)
+  }
+
+  fit.comp <- fit.comp %>%
+    dplyr::mutate(d.CFI = CFI - lag(CFI),
+           d.TLI = TLI - lag(TLI),
+           d.RMSEA = RMSEA - lag(RMSEA),
+           d.SRMR = SRMR - lag(SRMR))
+  row.names(fit.comp) <- NULL
+
+  evaluation <- "psych::anova.psych("
+  f <- paste0("factor.model$`",names(factor.model),"`$model",collapse = ", ")
+  evaluation <- paste(evaluation,f,")")
+  model.comp <- eval(parse(text=evaluation))
+  model.comp <- cbind(model.comp,fit.comp)
+  rownames(model.comp) <- paste0("n.factor = ",factors)
+  factor.model[["model comparaison"]] <- model.comp
+  class(factor.model) <- 'factor.comparaison'
+  return(factor.model)
+}
+
+
+
+#' Factor comparison
+#'
+#' Compute anova and fit index to compare multiple factor analyse fit for multiple factors solution
+#'
+#' @param data a data.frame containing the test or scale response in columns
+#' @param items The name of the items
+#' @param factors a facto class object from factor_explorer() or a vector with the number of factor
+#'
+#' @return a table with a CHI² comparison and CFI, TLI, RMSEA and SRMR differences
+#' @import dplyr
+#' @importFrom lavaan efa
+#' @importFrom lavaan fitmeasures
+#' @noRd
+#' @examples
+#' data("inference")
+#' items <- c(paste0("item_0",3:9),"item_10")
+#' f <- factor_explorer(inference, items)
+#' factor_comparison2(inference, items, f)
+#' factor_comparison2(inference, items, c(1,2,3))
+
+
+
+factor_comparison2 <- function(data, items, nfactors, ...){
+  message("deprecated use EFA_comp() instead")
+  tmp <- efa(data[,items ], nfactors = nfactors, ...)
+  fit = fitmeasures(tmp,c('cfi','tli','rmsea','srmr'))
+  fit = as.data.frame(t(fit)) %>%
+    dplyr::mutate(
+      d.CFI = cfi - lag(cfi),
+      d.TLI = tli - lag(tli),
+      d.RMSEA = rmsea - lag(rmsea),
+      d.SRMR = srmr - lag(srmr))
+
+  evaluation <- "lavaan::lavTestLRT("
+  efas <- paste("tmp[[",nfactors,"]]")
+  efas <- paste0(efas, collapse = ", ")
+  f <- paste0(evaluation, efas, ")")
+  model.comp <- eval(parse(text=f))
+  model.comp = as.data.frame(model.comp)
+
+  model.comp = model.comp %>% arrange(-Df) %>%
+    mutate(
+      `Chisq diff`=lag(`Chisq diff`),
+      RMSEA = lag(RMSEA),
+      `Df diff` = lag (`Df diff`),
+      `Pr(>Chisq)`  = lag(`Pr(>Chisq)`)
+    )
+
+  rownames(model.comp) <- paste0("nfactors = ",nfactors)
+
+  rez <- cbind(model.comp, fit)
+  factor.model <- vector("list")
+  factor.model[["model comparaison"]] <- rez
+  factor.model[["models"]] <- tmp
+  class(factor.model) <- 'factor.comparaison'
+
+  return(factor.model)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#' Print method for factor_comparaison
+#'
+#' @param x a factor.comparaison class
+#'
+#' @return return a print for the factor_comparaison() result
+#' @noRd
+#' @examples
+#' data("inference")
+#' items <- c(paste0("item_0",3:9),"item_10")
+#' f <- factor_explorer(inference, items)
+#' ff <- factor_comparison(inference, items, f)
+#' print(ff)
+
+print.factor.comparaison <- function(x){
+  print(knitr::kable(x[["model comparaison"]],'simple',digits = 3))
+}
+
+
+
+
