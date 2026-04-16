@@ -103,27 +103,27 @@ summary(eval1)
 #> Standardized loadings: (* = significant at 1% level)
 #> 
 #>             F1      F2      F3       unique.var   communalities
-#> item_03  0.576*      .*                   0.612           0.388
-#> item_04  0.485*      .                    0.758           0.242
-#> item_05  0.585*                           0.658           0.342
-#> item_06  0.673*                           0.546           0.454
-#> item_07  0.562*                           0.670           0.330
+#> item_03      .*  0.533*                   0.612           0.388
+#> item_04      .   0.468*                   0.758           0.242
+#> item_05          0.577*                   0.658           0.342
+#> item_06          0.674*                   0.546           0.454
+#> item_07          0.576*                   0.670           0.330
 #> item_08                 14.976*        -223.289         224.289
-#> item_09  0.476*      .                    0.744           0.256
-#> item_10  0.464*      .*                   0.703           0.297
+#> item_09      .   0.499*                   0.744           0.256
+#> item_10      .*  0.505*                   0.703           0.297
 #> 
-#>                                 F3     F1     F2   total
-#> Sum of sq (obliq) loadings 224.289  2.122  0.186 226.598
+#>                                 F3     F2     F1   total
+#> Sum of sq (obliq) loadings 224.289  2.125  0.184 226.598
 #> Proportion of total          0.990  0.009  0.001   1.000
-#> Proportion var              28.036  0.265  0.023  28.325
-#> Cumulative var              28.036 28.301 28.325  28.325
+#> Proportion var              28.036  0.266  0.023  28.325
+#> Cumulative var              28.036 28.302 28.325  28.325
 #> 
 #> Factor correlations: (* = significant at 1% level)
 #> 
 #>        F1      F2      F3 
 #> F1  1.000                 
-#> F2  0.047   1.000         
-#> F3  0.022*  0.001   1.000 
+#> F2 -0.095   1.000         
+#> F3 -0.003   0.022*  1.000 
 #> 
 #> ######################################
 #> ###   Models Fit and comparaisons  ###

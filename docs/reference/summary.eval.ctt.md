@@ -26,6 +26,6 @@ t <- CTT_summary(inference, items)
 print(t)
 #> function (x) 
 #> UseMethod("t")
-#> <bytecode: 0x5e7bafc005f0>
+#> <bytecode: 0x6459e5f72dd8>
 #> <environment: namespace:base>
 ```
