@@ -1,10 +1,10 @@
 Package: psychometRics
 Type: Package
-Title: tools for test and scale validation
+Title: tools for test and scale validation.
 Version: 0.1.0
 Author: Nicolas Rochat
 Maintainer: Nicolas Rochat
-Description: The package provide warper function for psychometric purpose, the objectif is to streamline commun analyse and evaluate test or scale quality
+Description: The package provide warper function for psychometric purpose, the objectif is to streamline commun analyse and evaluate test or scale quality.
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
